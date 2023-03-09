@@ -1,5 +1,13 @@
 const Card = require('../../models/card')
-
+const cardRouter = require('./cardRoutes')
+// {
+//     "name": "Alice",
+//     "experience": "2 years",
+//     "city": "Catalinaton",
+//     "phone": 16664784,
+//     "email": "alice@gmail.com",
+//     "description": "Professional pet sitter with 5 years of experience. Flexible scheduling to accommodate clients' needs"
+// }
 const cards = [
     {
         "id": 1,
@@ -52,8 +60,26 @@ async function createCard(card) {
     return newCard
 }
 
+async function updateCard(cardId, card) {
+    const updatedCard = await Card.findByIdAndUpdate(cardId, card, {
+        returnDocument: "before",
+        new: true, // return the updated card
+        // upsert: true, // create a new card if it doesn't exist
+    })
+    return updatedCard
+}
+
+async function deleteCard(cardId) {
+    //deleteOne/Many will delete but not return the records
+    //findByIdAndDelete / findOneAndDelete returns the records
+    const deletedCard = await Card.findByIdAndDelete(cardId)
+    return deletedCard
+}
+
 module.exports = {
     getCards,
     getCardById,
-    createCard
+    createCard,
+    updateCard,
+    deleteCard,
 }

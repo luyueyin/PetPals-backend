@@ -13,7 +13,6 @@ const CardSchema = new mongoose.Schema({
     experience: String,
     city: {
         type: String,
-        required: true,
         minLength: 3,
     },
     phone: {
@@ -28,7 +27,7 @@ const CardSchema = new mongoose.Schema({
         message: "Please enter a valid email address"
     },
     description: String,
-    // image: image
+    // image: URL,
     reviews: [ReviewSchema],
 });
 

@@ -1,5 +1,5 @@
 const express = require('express')
-const {getCards, getCardById, createCard } = require('./cardControllers')
+const {getCards, getCardById, createCard, updateCard, deleteCard } = require('./cardControllers')
 
 const cardRouter = express.Router()
 
@@ -26,10 +26,29 @@ cardRouter.post("/", async (req, res) => {
         experience: req.body.experience,
         phone: req.body.phone,
         email: req.body.email,
-        address: req.body.address,
+        city: req.body.address,
         description: req.body.description
     })
     res.json(card)
 });
+
+cardRouter.put('/:cardId', async (req, res) => {
+    const updatedCard = await updateCard(req.param.cardId, {
+        name: req.body.name,
+        experience: req.body.experience,
+        phone: req.body.phone,
+        email: req.body.email,
+        city: req.body.city,
+        description: req.body.description,
+        })
+        res.json(updatedCard)
+})
+
+
+
+cardRouter.delete("/:cardId", async (req, res) => {
+    const card = await deleteCard(req.params.cardId)
+    res.json(card)
+})
 
 module.exports = cardRouter
